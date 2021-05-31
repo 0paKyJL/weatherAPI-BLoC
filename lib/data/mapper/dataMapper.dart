@@ -6,14 +6,9 @@ import 'package:clear_architecture/domain/model/weather.dart';
 class DataMapper{
   static Data fromApi(ApiData data){
 print(data);
-    try{
       return Data(
     city: data.city,
-    description: data.description,
+    feelsTemperature: data.feelsTemperature,
     temperature: data.temperature);
-    }
-    on Exception catch(e){
-        print('Error');
-    }
   }
 }

@@ -1,14 +1,12 @@
 
-
-
 class ApiData{
   String city;
-  String description;
-  int temperature;
+  double feelsTemperature;
+  double temperature;
 
   ApiData.fromApi(Map<String,dynamic> map)
       : this.temperature=map['main']['temp'],
-        this.description=map['weather']['description'],
+        this.feelsTemperature=map['main']["feels_like"],
         this.city=map['name'];
 
 }

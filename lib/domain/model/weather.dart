@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 
 class Data{
   final String city;
-  final String description;
-  final int temperature;
+  final double feelsTemperature;
+  final double temperature;
 
   Data(
       {
         @required this.city,
-        @required this.description,
+        @required this.feelsTemperature,
         @required this.temperature
       }
       );
