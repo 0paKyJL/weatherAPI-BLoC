@@ -9,6 +9,9 @@ print(data);
       return Data(
     city: data.city,
     feelsTemperature: data.feelsTemperature,
-    temperature: data.temperature);
+    temperature: data.temperature,
+          pressure: data.pressure,
+        country:data.country
+      );
   }
 }

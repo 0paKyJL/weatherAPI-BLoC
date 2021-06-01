@@ -1,8 +1,10 @@
 import 'package:clear_architecture/domain/state/homeState.dart';
 import 'package:clear_architecture/internal/dependencies/homeModule.dart';
-import 'package:clear_architecture/presentation/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
+import 'info.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,14 +12,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final _cityController = TextEditingController();
-
   HomeState _homeState;
-
   @override
   void initState() {
     super.initState();
     _homeState = HomeModule.homeState();
+    _getData();
   }
   var kelvin = 273;
   @override
@@ -25,19 +25,27 @@ class _HomeState extends State<Home> {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
+        backgroundColor: Colors.white24,
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios,color: Color(0xFFCDDC39)),
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
           centerTitle: true,
-          backgroundColor: Color(0xFFCDDC39),
+          backgroundColor: Colors.black,
           title: Text(
               'Weather',
               style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold
+                  color: Color(0xFFCDDC39),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 23.0
               )
           ),
 
         ),
-        body: _getBody(),
+        body: Center(child: _getBody()),
       ),
     );
   }
@@ -49,47 +57,23 @@ class _HomeState extends State<Home> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _getRowInput(),
-            SizedBox(height:25),
-            ElevatedButton(
-              child: Text('Получить',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
-              onPressed: _getDay,
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Color(0xFFCDDC39)),
-              ),
-            ),
             SizedBox(height: 20),
-            _getDayInfo(),
+            _getDataInfo(),
           ],
         ),
       ),
     );
   }
 
-  Widget _getRowInput() {
-    return Row(
-      children: [
-        Expanded(
-          child: TextField(
-            controller: _cityController,
-            autofocus: true,
-            autocorrect: true,
-            keyboardType: TextInputType.numberWithOptions(decimal: true, signed: true),
-            decoration: InputDecoration(hintText: 'Введите город, например: Moscow'),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _getDayInfo() {
+  Widget _getDataInfo() {
     return Observer(
       builder: (_) {
         if (_homeState.isLoading)
           return Center(
             child: CircularProgressIndicator(),
           );
-        if (_homeState.data == null) return Container();
+        if (_homeState.data == null) return Container(
+        );
         return Container(
           height: MediaQuery.of(context).size.height*0.1,
           width: double.infinity,
@@ -98,6 +82,12 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                  'Страна: ${_homeState.data.country}',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)
+              ),
               Text(
                   'Город: ${_homeState.data.city}',
                   style: TextStyle(
@@ -117,6 +107,13 @@ class _HomeState extends State<Home> {
                       color: Colors.black
                   )
               ),
+              Text(
+                  'Давление: ${(_homeState.data.pressure)}',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                  )
+              )
             ],
           ),
         );
@@ -124,9 +121,9 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _getDay() {
+  void _getData() {
     // здесь получаем данные
-    final city = _cityController.text;
+    final city = context.read<City>().city;
     _homeState.getData(city: city);
   }
 }
