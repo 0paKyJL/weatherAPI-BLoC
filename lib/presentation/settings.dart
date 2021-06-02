@@ -1,3 +1,4 @@
 import 'package:flutter/material.dart';
 
-var kPersonalGreen = MaterialStateProperty.all(0xFFCDDC39);
+var kPersonalGreen = Color(0xFFCDDC39);
+int kelvin = 273;
