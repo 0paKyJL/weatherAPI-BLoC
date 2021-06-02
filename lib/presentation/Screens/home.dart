@@ -96,8 +96,8 @@ class _HomeState extends State<Home> {
         children: [
           infoRow('Страна',_homeState.data.country,''),
           infoRow('Город',_homeState.data.city,''),
-          infoRow('Ощущается как',_homeState.data.feelsTemperature,'C'),
-          infoRow('Температура',_homeState.data.temperature,'C'),
+          infoRow('Ощущается как',(_homeState.data.feelsTemperature-kelvin).toStringAsFixed(1),'C'),
+          infoRow('Температура',(_homeState.data.temperature-kelvin).toStringAsFixed(1),'C'),
           infoRow('Давление',(_homeState.data.pressure/hPa).toStringAsFixed(1),'mm'),
         ],
       ),
