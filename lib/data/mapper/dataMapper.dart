@@ -7,11 +7,11 @@ class DataMapper{
   static Data fromApi(ApiData data){
 print(data);
       return Data(
-    city: data.city,
-    feelsTemperature: data.feelsTemperature,
-    temperature: data.temperature,
-          pressure: data.pressure,
-        country:data.country
-      );
+                city: data.city,
+                feelsTemperature: data.feelsTemperature,
+                temperature: data.temperature,
+                pressure: data.pressure,
+                country:data.country,
+              );
   }
 }

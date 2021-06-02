@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _getDataInfo() {
+  Widget _getDataInfo(){
     return Observer(
       builder: (_) {
         if (_homeState.isLoading) {
@@ -80,16 +80,16 @@ class _HomeState extends State<Home> {
           );
         }
         if (_homeState.data == null) return Container();
-        return infoWeather();
+        return infoWeather(kPersonalGreen);
       },
     );
   }
 
-  Widget infoWeather(){
+  Widget infoWeather(color){
     return Container(
       height: MediaQuery.of(context).size.height*0.1,
       width: double.infinity,
-      color: kPersonalGreen,
+      color: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -98,11 +98,12 @@ class _HomeState extends State<Home> {
           infoRow('Город',_homeState.data.city,''),
           infoRow('Ощущается как',_homeState.data.feelsTemperature,'C'),
           infoRow('Температура',_homeState.data.temperature,'C'),
-          infoRow('Давление',_homeState.data.pressure,''),
+          infoRow('Давление',(_homeState.data.pressure/hPa).toStringAsFixed(1),'mm'),
         ],
       ),
     );
 }
+
 Widget infoRow(String nameField,value,measureIndex){
   return Text(
       '$nameField: $value $measureIndex',

@@ -6,6 +6,7 @@ class ApiData{
   double temperature;
   int pressure;
 
+
   ApiData.fromApi(Map<String,dynamic> map)
       : this.temperature=map['main']['temp'],
         this.feelsTemperature=map['main']["feels_like"],
